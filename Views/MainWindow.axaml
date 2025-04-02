@@ -1,0 +1,51 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:lab1.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="lab1.Views.MainWindow"
+        x:DataType="vm:MainViewModel"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="Лабораторная №1, Кучко Максим, гр. 351004">
+
+    <Design.DataContext>
+        <!-- This only sets the DataContext for the previewer in an IDE,
+             to set the actual DataContext for runtime, set the DataContext property in code (look at App.xaml.cs) -->
+        <vm:MainViewModel/>
+    </Design.DataContext>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        
+        <TextBlock Text="Лабораторная работа №1" FontSize="24" FontWeight="Bold" Margin="10" HorizontalAlignment="Center"/>
+        
+        <StackPanel Grid.Row="1" Margin="10">
+            <TextBlock Text="Выберите алгоритм шифрования:" FontWeight="Bold"/>
+            <ComboBox ItemsSource="{Binding Algorithms}"
+                      SelectedItem="{Binding SelectedAlgorithm}"/>
+            <TextBlock Text="{Binding SelectedAlgorithmInfo}" Foreground="Green" FontWeight="Bold"/>
+            
+            <TextBlock Text="Введите ключ" FontWeight="Bold" IsVisible="{Binding IsKeyVisible}"/>
+            <TextBox Text="{Binding Key1}" Watermark="Введите ключ" IsVisible="{Binding IsKeyVisible}"/>
+            
+            <TextBlock Text="Введите текст или откройте файл" FontWeight="Bold"/>
+            <Button Content="Открыть файл" Command="{Binding OpenFileCommand}"/>
+            <TextBox Text="{Binding InputText}" AcceptsReturn="True" Height="100" TextWrapping="Wrap"/>
+            
+            <TextBlock Text="Выберите действие:" FontWeight="Bold"/>
+            <StackPanel Orientation="Horizontal" Spacing="10">
+                <Button Content="Шифрование" Command="{Binding EncryptCommand}" />
+                <Button Content="Дешифрование" Command="{Binding DecryptCommand}" />
+            </StackPanel>
+            
+            <TextBlock Text="Результат" FontWeight="Bold"/>
+            <TextBox Text="{Binding ResultText}" AcceptsReturn="True" Height="100" TextWrapping="Wrap" IsReadOnly="True"/>
+            <Button Content="Сохранить" Command="{Binding SaveFileCommand}"/>
+        </StackPanel>
+    </Grid>
+
+</Window>
